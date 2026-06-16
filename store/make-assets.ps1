@@ -317,4 +317,38 @@ Text $g "Stats" (Font 13 'Bold') $TXT ($lx+38) ($ly+13)
 TextC $g "A tiny tab -> click to open the full panel" (Font 15 'Regular') $MUT 640 740
 $g.Dispose(); Save $bmp "screenshot-5-launcher.png"; $bmp.Dispose()
 
+# =====================================================================
+# MARQUEE PROMO 1400x560
+# =====================================================================
+$r = NewBmp 1400 560; $bmp=$r[0]; $g=$r[1]
+BG $g 1400 560
+# left branding
+FillRound $g $RED 90 150 92 92 18
+PlayTri $g ([System.Drawing.Color]::White) 126 196 44
+Text $g "FloatTube" (Font 54 'Bold') $TXT 205 150
+Text $g "Pop-Out Player & SEO" (Font 23 'Regular') $RED2 208 230
+Text $g "Always-on-top player  -  SEO score  -  tags  -  stats  -  tools" (Font 16 'Regular') $MUT 208 285
+Text $g "Watch anywhere while you work. No account. No tracking." (Font 15 'Regular') $MUT 208 330
+# right: floating player mock
+$px=770; $py=130; $pw=540; $ph=300
+$g.FillRectangle((New-Object System.Drawing.SolidBrush (C 0 0 0 120)),($px+14),($py+18),$pw,$ph)
+FillRound $g (C 10 10 12 255) $px $py $pw $ph 14
+StrokeRound $g $RED2 $px $py $pw $ph 14 2
+PlayTri $g (C 255 255 255 235) ($px+$pw/2) ($py+$ph/2-12) 54
+FillRound $g (C 20 20 22 235) ($px+12) ($py+$ph-46) ($pw-24) 34 8
+FillRound $g $RED ($px+22) ($py+$ph-40) 30 22 5
+StrokeRound $g (C 255 255 255 120) ($px+27) ($py+$ph-35) 18 12 3 1.5
+Text $g "Always on top" (Font 12 'Bold') $RED2 ($px+62) ($py+$ph-39)
+# small SEO score badge in the lower-left gap (clear of the player)
+$bx=600; $by=405; $bw=150; $bh=120
+FillRound $g (C 18 18 20 255) $bx $by $bw $bh 14
+StrokeRound $g $CARDB $bx $by $bw $bh 14 1
+$rx=$bx+18; $ry=$by+18; $rr=42
+$pen = New-Object System.Drawing.Pen((C 42 42 42 255),8); $g.DrawEllipse($pen,$rx,$ry,$rr*2,$rr*2); $pen.Dispose()
+$pen2 = New-Object System.Drawing.Pen($GREEN,8); $pen2.StartCap='Round'; $pen2.EndCap='Round'
+$g.DrawArc($pen2,$rx,$ry,$rr*2,$rr*2,-90,295); $pen2.Dispose()
+TextC $g "82" (Font 24 'Bold') $TXT ($rx+$rr) ($ry+22)
+TextC $g "SEO score" (Font 10 'Regular') $MUT ($bx+$bw/2) ($by+$bh-22)
+$g.Dispose(); Save $bmp "marquee-1400x560.png"; $bmp.Dispose()
+
 Write-Host "Done. Assets in: $out" -ForegroundColor Cyan
