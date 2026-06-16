@@ -343,12 +343,15 @@ Text $g "Always on top" (Font 12 'Bold') $RED2 ($px+62) ($py+$ph-39)
 $bx=600; $by=405; $bw=150; $bh=120
 FillRound $g (C 18 18 20 255) $bx $by $bw $bh 14
 StrokeRound $g $CARDB $bx $by $bw $bh 14 1
-$rx=$bx+18; $ry=$by+18; $rr=42
+$rr=38
+$ccx=$bx+$bw/2            # ring centered horizontally in the badge
+$rx=$ccx-$rr; $ry=$by+14  # ring top-left
+$ringCy=$ry+$rr           # ring center Y
 $pen = New-Object System.Drawing.Pen((C 42 42 42 255),8); $g.DrawEllipse($pen,$rx,$ry,$rr*2,$rr*2); $pen.Dispose()
 $pen2 = New-Object System.Drawing.Pen($GREEN,8); $pen2.StartCap='Round'; $pen2.EndCap='Round'
 $g.DrawArc($pen2,$rx,$ry,$rr*2,$rr*2,-90,295); $pen2.Dispose()
-TextC $g "82" (Font 24 'Bold') $TXT ($rx+$rr) ($ry+22)
-TextC $g "SEO score" (Font 10 'Regular') $MUT ($bx+$bw/2) ($by+$bh-22)
+TextC $g "82" (Font 22 'Bold') $TXT $ccx ($ringCy-16)
+TextC $g "SEO score" (Font 10 'Regular') $MUT $ccx ($by+$bh-20)
 $g.Dispose(); Save $bmp "marquee-1400x560.png"; $bmp.Dispose()
 
 Write-Host "Done. Assets in: $out" -ForegroundColor Cyan
