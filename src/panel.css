@@ -1,0 +1,229 @@
+/* ===== launcher tab (visible when panel is closed) ===== */
+#ytseo-launcher {
+  position: fixed;
+  top: 110px;
+  right: 0;
+  z-index: 2147483000;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 12px 9px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: none;
+  border-radius: 14px 0 0 14px;
+  background: rgba(18, 18, 20, 0.82);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  box-shadow: -6px 8px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s, background 0.15s;
+}
+#ytseo-launcher:hover { background: rgba(40, 40, 44, 0.9); padding-right: 16px; }
+#ytseo-launcher.hidden {
+  transform: translateX(120%);
+  opacity: 0;
+  pointer-events: none;
+}
+#ytseo-launcher .ytseo-l-ico { font-size: 15px; }
+
+/* ===== docked panel (closed by default, slides in from the right) ===== */
+#ytseo-panel {
+  position: fixed;
+  top: 64px;
+  right: 12px;
+  width: 320px;
+  max-height: 84vh;
+  z-index: 2147483000;
+  color: #f3f3f3;
+  font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+  font-size: 13px;
+  border-radius: 16px;
+  background: rgba(18, 18, 20, 0.82);
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateX(calc(100% + 24px));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s;
+}
+#ytseo-panel.open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* header */
+#ytseo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  user-select: none;
+  background: linear-gradient(135deg, rgba(255, 0, 51, 0.22), rgba(120, 0, 255, 0.18));
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ytseo-brand {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ytseo-brand sup { color: #ff3b5c; font-size: 11px; }
+.ytseo-dot {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: #ff3b5c; box-shadow: 0 0 10px #ff3b5c;
+  animation: ytseo-pulse 2s infinite;
+}
+@keyframes ytseo-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.ytseo-actions { display: flex; gap: 6px; }
+.ytseo-actions button {
+  width: 24px; height: 24px;
+  border: none; border-radius: 7px; cursor: pointer;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff; font-size: 12px; line-height: 1;
+  transition: background 0.15s, transform 0.15s;
+}
+.ytseo-actions button:hover { background: rgba(255, 255, 255, 0.24); transform: translateY(-1px); }
+
+/* tabs */
+#ytseo-tabs { display: flex; gap: 4px; padding: 8px 10px 0; }
+.ytseo-tab {
+  flex: 1;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  padding: 8px 4px;
+  border: none; border-radius: 10px 10px 0 0;
+  background: transparent; color: #9a9a9a;
+  font-size: 12px; font-weight: 600; cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.ytseo-tab span { font-size: 13px; }
+.ytseo-tab:hover { color: #ddd; }
+.ytseo-tab.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 -2px 0 #ff3b5c;
+}
+
+/* content */
+#ytseo-content { padding: 14px; overflow-y: auto; }
+#ytseo-content::-webkit-scrollbar { width: 8px; }
+#ytseo-content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 8px; }
+
+/* stat grid */
+.ytseo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.ytseo-stat {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 11px; padding: 9px 6px; text-align: center;
+}
+.ytseo-stat-v { font-size: 16px; font-weight: 700; }
+.ytseo-stat-l { font-size: 10px; color: #9a9a9a; margin-top: 2px; }
+.ytseo-stat-s { font-size: 9px; color: #6f6f6f; margin-top: 1px; }
+
+.ytseo-line {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 6px 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+.ytseo-line span:first-child { color: #9a9a9a; }
+.ytseo-line code { background: rgba(255,255,255,0.08); padding: 1px 6px; border-radius: 5px; font-size: 12px; }
+
+/* seo score */
+.ytseo-score { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+.ytseo-score-side { flex: 1; }
+.ytseo-hints { display: flex; flex-direction: column; gap: 4px; }
+.ytseo-hint { padding: 5px 9px; border-radius: 8px; font-size: 11.5px; }
+.ytseo-ok { background: rgba(46, 204, 113, 0.14); color: #5edc7e; }
+.ytseo-warn { background: rgba(240, 173, 78, 0.14); color: #f0ad4e; }
+.ytseo-bad { background: rgba(255, 59, 92, 0.16); color: #ff6b81; }
+
+/* chips */
+.ytseo-subhead {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 12px 0 7px; font-weight: 600; color: #ddd; font-size: 12px;
+}
+.ytseo-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.ytseo-chip {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px; padding: 3px 10px; font-size: 11px; color: #ddd;
+  transition: background 0.15s;
+}
+.ytseo-chip:hover { background: rgba(255, 59, 92, 0.22); }
+
+/* buttons */
+.ytseo-btn {
+  width: 100%; padding: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff; font-size: 12.5px; font-weight: 600; cursor: pointer;
+  transition: background 0.15s, transform 0.12s, border-color 0.15s;
+}
+.ytseo-btn:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-1px); }
+.ytseo-btn.primary {
+  background: linear-gradient(135deg, #ff3b5c, #ff0033);
+  border-color: transparent; margin-bottom: 10px;
+}
+.ytseo-btn.primary:hover { filter: brightness(1.08); }
+.ytseo-btn.ghost { background: transparent; color: #bbb; margin-top: 10px; }
+.ytseo-btn.set { border-color: #ff3b5c; color: #ff8fa0; }
+.ytseo-tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.ytseo-tool-grid.three { grid-template-columns: 1fr 1fr 1fr; }
+
+.ytseo-speeds { display: flex; gap: 6px; }
+.ytseo-pill {
+  flex: 1; padding: 7px 0;
+  border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 9px;
+  background: rgba(255, 255, 255, 0.05); color: #eee;
+  font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.15s;
+}
+.ytseo-pill:hover { background: rgba(255, 59, 92, 0.25); }
+
+.ytseo-mini { background: transparent; border: none; cursor: pointer; color: #4aa8ff; font-size: 11px; padding: 0 4px; }
+.ytseo-mini:hover { text-decoration: underline; }
+.ytseo-empty { color: #888; font-style: italic; padding: 18px 0; text-align: center; }
+
+/* player control-bar button (vidIQ-style) */
+.ytseo-ctrl-btn {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center; justify-content: center;
+  vertical-align: top; height: 100%;
+  opacity: 0.95; transition: opacity 0.1s;
+}
+.ytseo-ctrl-btn:hover { opacity: 1; }
+.ytseo-ctrl-btn svg {
+  display: block; height: 100%; width: 100%;
+  filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.5));
+}
+.ytseo-ctrl-btn::after {
+  content: "Pop Out";
+  position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%);
+  background: rgba(28, 28, 28, 0.95); color: #fff;
+  font-size: 12px; font-family: Roboto, Arial, sans-serif; white-space: nowrap;
+  padding: 5px 9px; border-radius: 6px; opacity: 0; pointer-events: none;
+  transition: opacity 0.12s;
+}
+.ytseo-ctrl-btn.ytseo-ctrl-hover::after { opacity: 1; }
+
+/* toast */
+#ytseo-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translate(-50%, 20px);
+  z-index: 2147483001;
+  background: rgba(20, 20, 22, 0.92);
+  backdrop-filter: blur(12px);
+  color: #fff; padding: 10px 18px; border-radius: 12px;
+  font-family: Roboto, Arial, sans-serif; font-size: 13px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+}
+#ytseo-toast.show { opacity: 1; transform: translate(-50%, 0); }

@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Out-Null *)",
+      "PowerShell(node --check D:\\\\youtubeextension\\\\src\\\\content.js; if\\($?\\){\"content.js OK\"})",
+      "PowerShell(pwsh -NoProfile -File D:\\\\youtubeextension\\\\store\\\\package.ps1)",
+      "PowerShell(pwsh -NoProfile -File D:\\\\youtubeextension\\\\store\\\\make-assets.ps1)"
+    ]
+  }
+}

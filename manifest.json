@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "FloatTube — Pop-Out Player & SEO",
+  "version": "1.0.0",
+  "description": "Pop out the video into an always-on-top floating window, plus an SEO & stats panel. For YouTube. Not affiliated with YouTube.",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "YouTube SEO & Float Player",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["src/content.js"],
+      "css": ["src/panel.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/inject.js"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}

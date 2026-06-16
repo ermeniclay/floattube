@@ -1,0 +1,11 @@
+# Build output / packaging
+dist/
+.pkg-stage/
+
+# OS / editor cruft
+Thumbs.db
+.DS_Store
+*.log
+
+# Node (in case tooling is added later)
+node_modules/
