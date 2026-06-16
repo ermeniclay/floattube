@@ -1,52 +1,82 @@
 # FloatTube — Pop-Out Player & SEO
 
-YouTube videolarını **tarayıcı dışında, her zaman üstte** tutan (Opera'daki gibi pop-out) ve video için **SEO + istatistik panosu** gösteren bir tarayıcı eklentisi.
+A browser extension that pops any YouTube video into an **always-on-top floating
+window** (like Opera's video popout) and shows an **SEO + statistics panel** for
+the video.
 
-> Yayın paketi (mağaza metinleri, gizlilik politikası, ekran görüntüsü rehberi, paketleme) `store/` klasöründedir.
+> Manifest V3 · Chrome / Edge / Opera (Chromium) · **No API key required.**
 
-> Manifest V3 · Chrome / Edge / Opera (Chromium tabanlı) · Harici API anahtarı **gerekmez**.
+## Features
 
-## Özellikler
+- 📌 **Pop-out floating player** — one click from the player control bar floats
+  the video above every window (Picture-in-Picture).
+- 📊 **SEO & stats panel** (right-docked, closed by default, opens on click):
+  - SEO score (0–100) with actionable hints
+  - Tags / keywords with "copy" and "copy as #hashtags"
+  - Views, likes, engagement rate, daily views, video age, duration, category
+  - Title and description length checks, copyable Video ID
+- 🛠 **Tools:** save the current frame as PNG, copy a link to the current
+  second, playback speed presets (up to 3x), A–B repeat, thumbnail download
+  (Max/HQ/MQ), export stats as JSON.
+- 🔒 **Private by design** — no accounts, no tracking, no servers. Everything is
+  read on the page and stored locally. Runs only on YouTube.
 
-- 📌 **Üstte Tut (Pop-out):** Picture-in-Picture ile video, tüm pencerelerin üstünde yüzen bir oynatıcıya alınır.
-- 📊 **SEO & İstatistik panosu** (sürüklenebilir, daraltılabilir kart):
-  - Görüntülenme, beğeni, **etkileşim oranı** (beğeni/görüntülenme)
-  - Süre, yayın tarihi, kategori, Video ID (kopyalanabilir)
-  - **Etiketler/keyword listesi** (chip'ler) + "tümünü kopyala"
-  - Başlık uzunluğu, açıklama uzunluğu, etiket sayısı
-  - **SEO ipuçları** (başlık/etiket/açıklama için ok/uyarı/hata değerlendirmesi)
-- Toolbar popup'ından hızlı kontrol; SPA gezinmede otomatik yenilenir.
+## Install (developer mode)
 
-## Kurulum (geliştirici modu)
+1. Open `chrome://extensions` in Chrome / Edge / Opera.
+2. Enable **Developer mode** (top right).
+3. **Load unpacked** → select this folder.
+4. Open a YouTube video (`youtube.com/watch?...`).
 
-1. Chrome / Edge / Opera'da `chrome://extensions` adresini açın.
-2. Sağ üstten **Developer mode**'u açın.
-3. **Load unpacked** → bu klasörü (`D:\youtubeextension`) seçin.
-4. Bir YouTube videosu açın (`youtube.com/watch?...`). Pano sağ üstte belirir.
+## Usage
 
-## Kullanım
+- A small tab on the right edge opens the **SEO & stats panel**.
+- The **red pop-out button** in the player control bar floats the video; click it
+  again to close.
+- You can also use the toolbar popup to pop out or toggle the panel.
 
-- Sağ üstteki kartı başlığından sürükleyin, `▾` ile daraltın, `✕` ile gizleyin.
-- **📌 Üstte Tut** ile videoyu yüzen pencereye alın (tekrar basınca kapanır).
-- Toolbar simgesine tıklayıp **Üstte Tut** veya **Panoyu Göster/Gizle** butonlarını da kullanabilirsiniz.
+## Data source
 
-## Veri kaynağı
+Stats are read on the page from YouTube's own player data
+(`movie_player.getPlayerResponse()` → `videoDetails` / `microformat`); tags come
+from there. Like count is read from the DOM on a best-effort basis (it may be
+empty across UI/language changes).
 
-İstatistikler, sayfanın kendi oynatıcı verisinden (`movie_player.getPlayerResponse()` → `videoDetails` / `microformat`) okunur; etiketler buradan gelir. Beğeni sayısı DOM'dan en iyi çabayla alınır (dil/tema değişikliklerinde boş gelebilir).
-
-## Dosya yapısı
+## Project structure
 
 ```
 manifest.json          # MV3 manifest
-src/inject.js          # Sayfa bağlamı köprüsü (oynatıcı verisini okur)
-src/content.js         # Pano + PiP mantığı (izole dünya)
-src/panel.css          # Pano stilleri
-popup/                 # Toolbar popup (html/css/js)
+src/inject.js          # page-context bridge (reads player data)
+src/content.js         # panel + pop-out + tools (isolated world)
+src/panel.css          # panel styles
+popup/                 # toolbar popup (html/css/js)
 icons/                 # 16/48/128 PNG
+docs/privacy.html      # hosted privacy policy (GitHub Pages)
+store/                 # store listing copy, screenshots, packaging, assets
 ```
 
-## Sınırlamalar / yol haritası
+## Publishing
 
-- **Firefox** native Document PiP'i desteklemez; mevcut PiP butonu Chromium'da çalışır.
-- Beğeni/abone gibi DOM'dan okunan alanlar YouTube arayüz değişikliklerine duyarlıdır.
-- Sonraki adımlar: Document PiP ile özel kontrollü oynatıcı, rakip video/etiket karşılaştırması, görüntülenme/saat tahmini, dışa aktarma (CSV).
+The Chrome Web Store package lives in `store/`:
+
+- `STORE_LISTING.md` — name, descriptions (EN/TR), permission justifications
+- `PRIVACY.md` / `docs/privacy.html` — privacy policy
+- `SCREENSHOTS.md` — visual asset guide; ready-made assets in `store/assets/`
+- `PUBLISH_CHECKLIST.md` — step-by-step submission flow
+- `package.ps1` — builds `dist/floattube-vX.Y.Z.zip`
+- `make-assets.ps1` — regenerates the promo tile + screenshots
+
+Privacy policy URL: <https://ermeniclay.github.io/floattube/privacy.html>
+
+## Limitations / roadmap
+
+- **Firefox** doesn't support the same floating-player API; the pop-out button
+  targets Chromium browsers.
+- DOM-read fields (like/subscriber counts) depend on YouTube's UI.
+- Ideas: estimated revenue, channel-average comparison, transcript export,
+  most-replayed peak, theme adaptation, video filters (night mode).
+
+## License & disclaimer
+
+Independent project — **not affiliated with, endorsed by, or sponsored by
+YouTube or Google LLC**. "YouTube" is a trademark of Google LLC.
