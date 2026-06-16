@@ -12,3 +12,6 @@ node_modules/
 
 # Local Claude config
 .claude/
+
+# OMC state
+.omc/
