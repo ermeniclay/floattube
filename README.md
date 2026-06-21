@@ -1,18 +1,19 @@
 # FloatTube — Pop-Out Player & SEO
 
 A browser extension that pops any video into an **always-on-top floating window**
-(like Opera's video popout) — on YouTube, Twitch, Kick, Netflix, Disney+, Prime
-Video and TRT/Tabii — and shows an **SEO + statistics panel** on YouTube.
+(like Opera's video popout) — on YouTube, Twitch, Kick, Netflix, and virtually
+**any other site with a video** — and shows an **SEO + statistics panel** on
+YouTube.
 
 > Manifest V3 · Chrome / Edge / Opera (Chromium) · **No API key required.**
 
 ## Features
 
 - 📌 **Pop-out floating player** — one click (or `Alt+P`) floats the video above
-  every window. On YouTube it uses a player-bar button; on other video sites a
-  floating button appears, opening a custom window with **volume, mute, and a
-  seek bar** built in (via the Document Picture-in-Picture API, native PiP
-  fallback).
+  every window, on **any website with a video**. On YouTube it uses a player-bar
+  button; everywhere else a floating button appears, opening a custom window with
+  **volume, mute, and a seek bar** built in (via the Document Picture-in-Picture
+  API, with native PiP as a fallback for cross-origin embeds).
 - 📊 **SEO & stats panel** — *YouTube only* (right-docked, closed by default, opens on click):
   - SEO score (0–100) with actionable hints
   - Tags / keywords with "copy" and "copy as #hashtags"
@@ -22,7 +23,8 @@ Video and TRT/Tabii — and shows an **SEO + statistics panel** on YouTube.
   second, playback speed presets (up to 3x), A–B repeat, thumbnail download
   (Max/HQ/MQ), export stats as JSON.
 - 🔒 **Private by design** — no accounts, no tracking, no servers. Everything is
-  read on the page and stored locally. Runs only on the supported video sites.
+  read on the page and stored locally. Runs on the pages you open only to find a
+  playing video (and, on YouTube, read public video data) — nothing is sent out.
 
 ## Install (developer mode)
 

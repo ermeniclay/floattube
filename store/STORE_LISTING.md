@@ -45,7 +45,8 @@ gives YouTube creators the stats they actually care about.
 ⭐ POP-OUT FLOATING PLAYER
 • One click pops the video into an always-on-top floating window so you can
   watch while you work.
-• Works on YouTube, Twitch, Kick, Netflix, Disney+, Prime Video and TRT/Tabii.
+• Works on YouTube, Twitch, Kick, Netflix, Disney+, Prime Video, TRT/Tabii —
+  and virtually any other website with a video.
 • Built-in floating controls: play/pause, volume, mute, and a seek bar for
   recorded videos.
 • Or use the quick shortcut: Alt + P.
@@ -82,7 +83,8 @@ ve YouTube içerik üreticilerine önemsedikleri istatistikleri verir.
 
 ⭐ YÜZEN POP-OUT OYNATICI
 • Tek tıkla video her zaman üstte yüzen bir pencereye geçer; çalışırken izle.
-• YouTube, Twitch, Kick, Netflix, Disney+, Prime Video ve TRT/Tabii'de çalışır.
+• YouTube, Twitch, Kick, Netflix, Disney+, Prime Video, TRT/Tabii — ve video
+  olan hemen hemen her web sitesinde çalışır.
 • Yerleşik kontroller: oynat/duraklat, ses, sessize alma ve kayıtlı videolar
   için ileri-geri sarma çubuğu.
 • Ya da hızlı kısayol: Alt + P.
@@ -121,14 +123,14 @@ twitch, kick, netflix, youtube seo, video tags, thumbnail downloader
 
 ## Single purpose (required field — keep it one sentence)
 ```
-FloatTube pops the video out into an always-on-top floating player on video sites (YouTube, Twitch, Kick, Netflix and more), with an added SEO/stats panel on YouTube.
+FloatTube pops the video on the current page out into an always-on-top floating player on any website, with an added SEO/stats panel on YouTube.
 ```
 
 ## Permission justifications (required, one per permission)
 
 - **storage**: "Stores the user's panel preferences (open/closed, last tab) locally so they persist between visits."
 - **activeTab**: "Lets the toolbar popup send a command (pop out / toggle panel) to the active YouTube tab the user is currently viewing."
-- **host permissions (youtube.com, twitch.tv, kick.com, netflix.com, disneyplus.com, primevideo.com, tabii.com, trtizle.com, trt.net.tr)**: "The content script runs on these video sites to add the always-on-top floating (Picture-in-Picture) player. On YouTube it additionally reads the page's public video data to show the SEO/stats panel. No data is sent anywhere."
+- **host permission `<all_urls>` (all sites)**: "Pop-out is a generic Picture-in-Picture feature that must work on any website where a video is playing (e.g. arbitrary video/streaming sites), so the content script runs on all URLs to detect the active video and add the floating-player button. It does not read or transmit page content; on YouTube only, it additionally reads the page's public video data to show the SEO/stats panel. No data is sent anywhere."
 
 ## Data usage disclosures (Web Store form)
 - Personally identifiable information: **No**

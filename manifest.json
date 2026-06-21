@@ -4,19 +4,7 @@
   "version": "1.1.0",
   "description": "Pop any video into an always-on-top floating window — YouTube, Twitch, Kick, Netflix & more. Plus an SEO & stats panel for YouTube.",
   "permissions": ["activeTab", "storage"],
-  "host_permissions": [
-    "https://www.youtube.com/*",
-    "https://m.youtube.com/*",
-    "https://*.twitch.tv/*",
-    "https://kick.com/*",
-    "https://*.kick.com/*",
-    "https://*.netflix.com/*",
-    "https://*.disneyplus.com/*",
-    "https://*.primevideo.com/*",
-    "https://*.tabii.com/*",
-    "https://*.trtizle.com/*",
-    "https://www.trt.net.tr/*"
-  ],
+  "host_permissions": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
   "action": {
     "default_popup": "popup/popup.html",
     "default_title": "YouTube SEO & Float Player",
@@ -39,31 +27,16 @@
       "run_at": "document_idle"
     },
     {
-      "matches": [
-        "https://*.twitch.tv/*",
-        "https://kick.com/*",
-        "https://*.kick.com/*",
-        "https://*.netflix.com/*",
-        "https://*.disneyplus.com/*",
-        "https://*.primevideo.com/*",
-        "https://*.tabii.com/*",
-        "https://*.trtizle.com/*",
-        "https://www.trt.net.tr/*"
-      ],
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
       "js": ["src/floater.js"],
       "css": ["src/floater.css"],
       "run_at": "document_idle",
       "all_frames": true
     },
     {
-      "matches": [
-        "https://*.netflix.com/*",
-        "https://*.disneyplus.com/*",
-        "https://*.primevideo.com/*",
-        "https://*.tabii.com/*",
-        "https://*.trtizle.com/*",
-        "https://www.trt.net.tr/*"
-      ],
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
       "js": ["src/unlock-pip.js"],
       "run_at": "document_start",
       "all_frames": true,

@@ -3,9 +3,9 @@
 _Last updated: 2026-06-21_
 
 FloatTube is a browser extension that adds an always-on-top pop-out (floating)
-player to supported video sites — YouTube, Twitch, Kick, Netflix, Disney+, Prime
-Video and TRT/Tabii — and an SEO / statistics panel on YouTube. Your privacy
-matters — here is exactly what the extension does and does not do.
+player to the video on whatever page you are watching — on any website — and an
+SEO / statistics panel on YouTube. Your privacy matters — here is exactly what
+the extension does and does not do.
 
 ## What data we collect
 
@@ -13,8 +13,9 @@ matters — here is exactly what the extension does and does not do.
 
 - We do **not** run any servers and send **no** data off your device.
 - We do **not** use analytics, tracking, advertising, or third-party SDKs.
-- We do **not** read your browsing history, cookies, or passwords, and we run
-  only on the supported video sites listed below.
+- We do **not** read your browsing history, cookies, or passwords. The extension
+  runs on the pages you open only to find a playing video and add the floating
+  player; it does not collect or transmit the content of those pages.
 
 ## Data the extension uses locally (never leaves your device)
 
@@ -33,13 +34,14 @@ matters — here is exactly what the extension does and does not do.
 - **`storage`** — to remember your panel preferences locally.
 - **`activeTab`** — so the toolbar popup can talk to the YouTube tab you are
   viewing when you click the extension.
-- **Host access to the supported video sites** (`youtube.com`, `twitch.tv`,
-  `kick.com`, `netflix.com`, `disneyplus.com`, `primevideo.com`, `tabii.com`,
-  `trtizle.com`, `trt.net.tr`) — so the extension can add the floating pop-out
-  player on those sites, and on YouTube read the public video data for the panel.
+- **Host access to all sites (`<all_urls>`)** — pop-out is a generic feature
+  that must work wherever a video plays, so the content script runs on the pages
+  you open to detect the active video and add the floating-player button. On
+  YouTube only, it additionally reads the public video data for the panel.
 
-The extension has **no access to any website other than the supported video
-sites listed above**.
+Although the extension can run on any page, it only ever interacts with the
+video element (and, on YouTube, the public video metadata). It never reads or
+sends the content of the pages you visit.
 
 ## Thumbnail / link actions
 

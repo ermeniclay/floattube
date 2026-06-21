@@ -271,14 +271,25 @@
     true
   );
 
+  // Runs in every frame of every site, so keep DOM scanning cheap: coalesce
+  // mutation bursts into one debounced update.
+  let pending = 0;
+  function scheduleUpdate() {
+    if (pending) return;
+    pending = setTimeout(() => {
+      pending = 0;
+      update();
+    }, 400);
+  }
+
   function start() {
     makeButton();
     update();
-    new MutationObserver(update).observe(document.documentElement, {
+    new MutationObserver(scheduleUpdate).observe(document.documentElement, {
       subtree: true,
       childList: true
     });
-    setInterval(update, 1500);
+    setInterval(update, 2000);
     document.addEventListener("enterpictureinpicture", update, true);
     document.addEventListener("leavepictureinpicture", update, true);
   }
