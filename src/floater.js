@@ -114,6 +114,90 @@
     } catch (e) {}
   }
 
+  /* ---------- subtitle mirroring (Document PiP only) ---------- */
+  // Many players draw subtitles as a DOM overlay sibling of <video> (not as
+  // native text tracks), so moving only the video drops them. We locate that
+  // overlay and move the live node into the PiP stage, layered over the video;
+  // the site's subtitle engine keeps updating it. Restored on close.
+
+  const SUB_KNOWN = [
+    ".libassjs-canvas-parent", // JavascriptSubtitlesOctopus / libass (ASS subs)
+    ".shaka-text-container", // Shaka Player
+    ".vjs-text-track-display", // Video.js
+    ".jw-captions", // JW Player
+    ".plyr__captions", // Plyr
+    ".bmpui-ui-subtitle-overlay" // Bitmovin
+  ];
+  const SUB_GENERIC = ["[class*='subtitle']", "[class*='caption']"];
+
+  function findPlayerRoot(video) {
+    const vr = video.getBoundingClientRect();
+    let el = video.parentElement;
+    let best = video.parentElement || document.body;
+    let depth = 0;
+    while (el && depth < 6) {
+      const r = el.getBoundingClientRect();
+      if (r.width >= vr.width - 4 && r.height >= vr.height - 4) best = el;
+      el = el.parentElement;
+      depth++;
+    }
+    return best || document.body;
+  }
+
+  function pickOverlay(root, video, selectors, requireSize) {
+    for (const sel of selectors) {
+      let nodes;
+      try {
+        nodes = root.querySelectorAll(sel);
+      } catch (e) {
+        continue;
+      }
+      for (const n of nodes) {
+        if (n === video || n.contains(video) || video.contains(n)) continue;
+        if (requireSize) {
+          const r = n.getBoundingClientRect();
+          if (r.width < 60 || r.height < 12) continue;
+        }
+        return n;
+      }
+    }
+    return null;
+  }
+
+  function findSubtitleOverlay(video) {
+    const root = findPlayerRoot(video);
+    return (
+      pickOverlay(root, video, SUB_KNOWN, false) ||
+      pickOverlay(root, video, SUB_GENERIC, true)
+    );
+  }
+
+  function mirrorSubtitles(video, stage) {
+    const overlay = findSubtitleOverlay(video);
+    if (!overlay) return null;
+    const parent = overlay.parentNode;
+    const ph = document.createComment("ft-sub-slot");
+    if (parent) parent.insertBefore(ph, overlay);
+    const prevStyle = overlay.getAttribute("style") || "";
+    const wrap = stage.ownerDocument.createElement("div");
+    wrap.className = "ftp-sub";
+    wrap.appendChild(overlay); // auto-adopts into the PiP document
+    overlay.style.position = "absolute";
+    overlay.style.inset = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    stage.appendChild(wrap);
+    return { overlay, parent, ph, prevStyle };
+  }
+
+  function restoreSubtitles(info) {
+    if (!info) return;
+    if (info.prevStyle) info.overlay.setAttribute("style", info.prevStyle);
+    else info.overlay.removeAttribute("style");
+    if (info.ph.parentNode) info.ph.replaceWith(info.overlay);
+    else if (info.parent) info.parent.appendChild(info.overlay);
+  }
+
   /* ---------- Document PiP with custom controls ---------- */
 
   async function openDocPip(video) {
@@ -147,6 +231,18 @@
     root.appendChild(buildControls(d, video));
     d.body.appendChild(root);
 
+    let subInfo = null;
+    try {
+      subInfo = mirrorSubtitles(video, stage);
+    } catch (e) {}
+    // Nudge subtitle engines (libass etc.) to recompute their layout for the
+    // new container size.
+    setTimeout(() => {
+      try {
+        window.dispatchEvent(new Event("resize"));
+      } catch (e) {}
+    }, 80);
+
     if (video.paused) {
       try {
         await video.play();
@@ -160,6 +256,14 @@
       else video.removeAttribute("style");
       if (placeholder.parentNode) placeholder.replaceWith(video);
       else if (origParent) origParent.appendChild(video);
+      try {
+        restoreSubtitles(subInfo);
+      } catch (e) {}
+      setTimeout(() => {
+        try {
+          window.dispatchEvent(new Event("resize"));
+        } catch (e) {}
+      }, 80);
       update();
     });
     update();
@@ -239,8 +343,10 @@
     html,body{margin:0;height:100%;background:#000;overflow:hidden;
       font:500 12px/1.3 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#fff;}
     .ftp-root{display:flex;flex-direction:column;height:100%;}
-    .ftp-stage{flex:1;min-height:0;display:flex;background:#000;}
+    .ftp-stage{flex:1;min-height:0;display:flex;position:relative;background:#000;}
     .ftp-stage video{width:100%;height:100%;object-fit:contain;background:#000;}
+    .ftp-sub{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+    .ftp-sub canvas{max-width:100%;max-height:100%;}
     .ftp-bar{display:flex;align-items:center;gap:8px;padding:6px 10px;height:36px;
       box-sizing:border-box;background:#121214;border-top:1px solid rgba(255,255,255,.1);}
     .ftp-btn{flex:none;width:26px;height:26px;border:none;border-radius:7px;cursor:pointer;

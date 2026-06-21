@@ -13,7 +13,9 @@ YouTube.
   every window, on **any website with a video**. On YouTube it uses a player-bar
   button; everywhere else a floating button appears, opening a custom window with
   **volume, mute, and a seek bar** built in (via the Document Picture-in-Picture
-  API, with native PiP as a fallback for cross-origin embeds).
+  API, with native PiP as a fallback for cross-origin embeds). On same-origin
+  players it also carries over **on-screen subtitles** (libass/SubtitlesOctopus,
+  Shaka, Video.js, JW Player, Plyr, Bitmovin) — best-effort.
 - 📊 **SEO & stats panel** — *YouTube only* (right-docked, closed by default, opens on click):
   - SEO score (0–100) with actionable hints
   - Tags / keywords with "copy" and "copy as #hashtags"
