@@ -42,26 +42,47 @@
     } catch (e) {}
   }
 
+  // Document PiP (our custom controls) is same-origin only — it is blocked in a
+  // cross-origin iframe (e.g. an embedded player on a film site), where only
+  // native PiP works. Detect that so we don't waste the click gesture on a
+  // requestWindow() that is guaranteed to fail.
+  function inCrossOriginFrame() {
+    if (window.top === window) return false;
+    try {
+      void window.top.location.href;
+      return false;
+    } catch (e) {
+      return true;
+    }
+  }
+
   /* ---------- pop-out (Document PiP preferred, native fallback) ---------- */
 
   async function popOut() {
+    // Toggle off whatever is currently floating.
     if (docPip) {
-      try {
-        docPip.close();
-      } catch (e) {}
+      closeDocPip();
       return;
     }
-    if (document.pictureInPictureElement) {
+    if (document.pictureInPictureElement || (window.documentPictureInPicture && documentPictureInPicture.window)) {
       try {
-        await document.exitPictureInPicture();
+        if (document.pictureInPictureElement) await document.exitPictureInPicture();
+        if (window.documentPictureInPicture && documentPictureInPicture.window)
+          documentPictureInPicture.window.close();
       } catch (e) {}
+      update();
       return;
     }
     const v = pickVideo();
     if (!v) return toast("No playable video found on this page.");
     unlock(v);
 
-    if (window.documentPictureInPicture && typeof documentPictureInPicture.requestWindow === "function") {
+    const canDocPip =
+      window.documentPictureInPicture &&
+      typeof documentPictureInPicture.requestWindow === "function" &&
+      !inCrossOriginFrame();
+
+    if (canDocPip) {
       try {
         await openDocPip(v);
         return;
@@ -79,9 +100,18 @@
           await v.play();
         } catch (e) {}
       }
+      if (!canDocPip) {
+        toast("Floating in basic mode — this player supports native picture-in-picture only.");
+      }
     } catch (e) {
       toast("Pop-out failed: " + (e && e.message ? e.message : e));
     }
+  }
+
+  function closeDocPip() {
+    try {
+      if (docPip) docPip.close();
+    } catch (e) {}
   }
 
   /* ---------- Document PiP with custom controls ---------- */
@@ -143,13 +173,20 @@
       <button class="ftp-btn" data-act="mute" title="Mute">🔊</button>
       <input class="ftp-vol" type="range" min="0" max="1" step="0.01" title="Volume">
       <span class="ftp-time">LIVE</span>
-      <input class="ftp-seek" type="range" min="0" max="1000" step="1" title="Seek">`;
+      <input class="ftp-seek" type="range" min="0" max="1000" step="1" title="Seek">
+      <button class="ftp-btn ftp-close" data-act="close" title="Close (back to tab)">✕</button>`;
     const $ = (s) => bar.querySelector(s);
     const playBtn = $('[data-act="play"]');
     const muteBtn = $('[data-act="mute"]');
     const vol = $(".ftp-vol");
     const seek = $(".ftp-seek");
     const timeEl = $(".ftp-time");
+    const closeBtn = $('[data-act="close"]');
+    closeBtn.onclick = () => {
+      try {
+        d.defaultView.close();
+      } catch (e) {}
+    };
 
     const isLive = () => !isFinite(video.duration) || video.duration === 0;
     const fmt = (s) => {
@@ -209,6 +246,8 @@
     .ftp-btn{flex:none;width:26px;height:26px;border:none;border-radius:7px;cursor:pointer;
       background:rgba(255,255,255,.08);color:#fff;font-size:13px;line-height:1;}
     .ftp-btn:hover{background:rgba(255,255,255,.18);}
+    .ftp-close{flex:none;}
+    .ftp-close:hover{background:#ff3b5c;}
     .ftp-time{flex:none;color:#bbb;min-width:34px;text-align:center;}
     .ftp-vol{flex:none;width:80px;}
     .ftp-seek{flex:1;min-width:40px;}
