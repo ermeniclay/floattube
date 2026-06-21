@@ -1,16 +1,19 @@
 # FloatTube — Pop-Out Player & SEO
 
-A browser extension that pops any YouTube video into an **always-on-top floating
-window** (like Opera's video popout) and shows an **SEO + statistics panel** for
-the video.
+A browser extension that pops any video into an **always-on-top floating window**
+(like Opera's video popout) — on YouTube, Twitch, Kick, Netflix, Disney+, Prime
+Video and TRT/Tabii — and shows an **SEO + statistics panel** on YouTube.
 
 > Manifest V3 · Chrome / Edge / Opera (Chromium) · **No API key required.**
 
 ## Features
 
-- 📌 **Pop-out floating player** — one click from the player control bar floats
-  the video above every window (Picture-in-Picture).
-- 📊 **SEO & stats panel** (right-docked, closed by default, opens on click):
+- 📌 **Pop-out floating player** — one click (or `Alt+P`) floats the video above
+  every window. On YouTube it uses a player-bar button; on other video sites a
+  floating button appears, opening a custom window with **volume, mute, and a
+  seek bar** built in (via the Document Picture-in-Picture API, native PiP
+  fallback).
+- 📊 **SEO & stats panel** — *YouTube only* (right-docked, closed by default, opens on click):
   - SEO score (0–100) with actionable hints
   - Tags / keywords with "copy" and "copy as #hashtags"
   - Views, likes, engagement rate, daily views, video age, duration, category
@@ -19,7 +22,7 @@ the video.
   second, playback speed presets (up to 3x), A–B repeat, thumbnail download
   (Max/HQ/MQ), export stats as JSON.
 - 🔒 **Private by design** — no accounts, no tracking, no servers. Everything is
-  read on the page and stored locally. Runs only on YouTube.
+  read on the page and stored locally. Runs only on the supported video sites.
 
 ## Install (developer mode)
 
@@ -46,9 +49,12 @@ empty across UI/language changes).
 
 ```
 manifest.json          # MV3 manifest
-src/inject.js          # page-context bridge (reads player data)
-src/content.js         # panel + pop-out + tools (isolated world)
-src/panel.css          # panel styles
+src/inject.js          # YouTube page-context bridge (reads player data)
+src/content.js         # YouTube panel + pop-out + tools (isolated world)
+src/panel.css          # YouTube panel styles
+src/floater.js         # universal pop-out player for other video sites
+src/floater.css        # universal floating button + window styles
+src/unlock-pip.js      # MAIN-world helper that unblocks PiP (Netflix etc.)
 popup/                 # toolbar popup (html/css/js)
 icons/                 # 16/48/128 PNG
 docs/privacy.html      # hosted privacy policy (GitHub Pages)
