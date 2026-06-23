@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "FloatTube — Pop-Out Player & SEO",
   "version": "1.1.0",
-  "description": "Pop any video into an always-on-top floating window — YouTube, Twitch, Kick, Netflix & more. Plus an SEO & stats panel for YouTube.",
+  "description": "Pop any video into an always-on-top floating window on any site with a video. Plus an SEO & stats panel for YouTube.",
   "permissions": ["activeTab", "storage"],
   "host_permissions": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
   "action": {

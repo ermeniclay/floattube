@@ -65,5 +65,5 @@ Questions about privacy? Contact: **yalcinhometablet@gmail.com**
 ---
 
 _FloatTube is an independent project and is not affiliated with, endorsed by, or
-sponsored by YouTube, Twitch, Kick, Netflix, Disney, Amazon, TRT, or Google LLC.
-All trademarks belong to their respective owners._
+sponsored by any of the websites it works on. All trademarks belong to their
+respective owners._

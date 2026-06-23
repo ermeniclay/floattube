@@ -1,9 +1,8 @@
 # FloatTube — Pop-Out Player & SEO
 
 A browser extension that pops any video into an **always-on-top floating window**
-(like Opera's video popout) — on YouTube, Twitch, Kick, Netflix, and virtually
-**any other site with a video** — and shows an **SEO + statistics panel** on
-YouTube.
+(like Opera's video popout) — on YouTube and virtually **any other site with a
+video** — and shows an **SEO + statistics panel** on YouTube.
 
 > Manifest V3 · Chrome / Edge / Opera (Chromium) · **No API key required.**
 

@@ -16,12 +16,12 @@ FloatTube — Pop-Out Player & SEO
 
 **EN**
 ```
-Pop any video into an always-on-top floating player — YouTube, Twitch, Kick, Netflix & more — plus a YouTube SEO & stats panel.
+Pop any video into an always-on-top floating player on any website — plus a YouTube SEO & stats panel.
 ```
 
 **TR**
 ```
-Videoyu her zaman üstte yüzen oynatıcıya çıkar — YouTube, Twitch, Kick, Netflix ve daha fazlası — ayrıca YouTube SEO ve istatistik panosu.
+Videoyu her zaman üstte yüzen oynatıcıya çıkar — her web sitesinde — ayrıca YouTube SEO ve istatistik panosu.
 ```
 
 ## Category
@@ -45,8 +45,8 @@ gives YouTube creators the stats they actually care about.
 ⭐ POP-OUT FLOATING PLAYER
 • One click pops the video into an always-on-top floating window so you can
   watch while you work.
-• Works on YouTube, Twitch, Kick, Netflix, Disney+, Prime Video, TRT/Tabii —
-  and virtually any other website with a video.
+• Works on virtually any website with a video — streaming sites, social
+  networks, news sites, and more.
 • Built-in floating controls: play/pause, volume, mute, and a seek bar for
   recorded videos.
 • Or use the quick shortcut: Alt + P.
@@ -71,8 +71,8 @@ gives YouTube creators the stats they actually care about.
 • Nothing leaves your device — all data is read on the page and stored locally.
 
 FloatTube is an independent project and is not affiliated with, endorsed by, or
-sponsored by YouTube, Twitch, Kick, Netflix, Disney, Amazon, TRT, or Google LLC.
-All trademarks belong to their respective owners.
+sponsored by any of the websites it works on. All trademarks belong to their
+respective owners.
 ```
 
 ## Detailed description (TR)
@@ -83,8 +83,8 @@ ve YouTube içerik üreticilerine önemsedikleri istatistikleri verir.
 
 ⭐ YÜZEN POP-OUT OYNATICI
 • Tek tıkla video her zaman üstte yüzen bir pencereye geçer; çalışırken izle.
-• YouTube, Twitch, Kick, Netflix, Disney+, Prime Video, TRT/Tabii — ve video
-  olan hemen hemen her web sitesinde çalışır.
+• Video olan hemen hemen her web sitesinde çalışır — yayın siteleri, sosyal
+  medya, haber siteleri ve daha fazlası.
 • Yerleşik kontroller: oynat/duraklat, ses, sessize alma ve kayıtlı videolar
   için ileri-geri sarma çubuğu.
 • Ya da hızlı kısayol: Alt + P.
@@ -108,9 +108,9 @@ ve YouTube içerik üreticilerine önemsedikleri istatistikleri verir.
 • Hesap yok, takip yok, reklam yok.
 • Hiçbir veri cihazından çıkmaz; her şey sayfada okunur ve yerel saklanır.
 
-FloatTube bağımsız bir projedir; YouTube, Twitch, Kick, Netflix, Disney, Amazon,
-TRT veya Google LLC ile bağlantılı, onaylı ya da sponsorlu değildir. Tüm ticari
-markalar ilgili sahiplerine aittir.
+FloatTube bağımsız bir projedir; üzerinde çalıştığı web siteleriyle bağlantılı,
+onlar tarafından onaylanmış ya da sponsorlu değildir. Tüm ticari markalar ilgili
+sahiplerine aittir.
 ```
 
 ---
@@ -118,7 +118,7 @@ markalar ilgili sahiplerine aittir.
 ## Search keywords / tags (suggest in dashboard fields where allowed)
 ```
 picture in picture, pop out, floating player, always on top, miniplayer,
-twitch, kick, netflix, youtube seo, video tags, thumbnail downloader
+youtube seo, video tags, thumbnail downloader
 ```
 
 ## Single purpose (required field — keep it one sentence)
